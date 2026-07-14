@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
+import toast from "react-hot-toast";
 
 export default function Signup() {
     const navigate = useNavigate();
@@ -85,7 +86,7 @@ export default function Signup() {
 
             if (res.status === 201) {
                 setErrors({});
-                alert("Account created Successfully! Check Your Email for Verification Link");
+                toast.success("Account created Successfully! Check Your Email for Verification Link");
                 navigate('/login');
             }
         }
@@ -97,10 +98,10 @@ export default function Signup() {
                 const duplicateField = err.response.data.field;
                 duplicateField === 'username' ? (
                     setErrors({ usernameError: 'Username Already Taken' }),
-                    alert('Username Already Taken')
+                    toast.error('Username Already Taken')
                 ) : (
                     setErrors({ emailError: 'Email Already Registered' }),
-                    alert('Email Already Registered')
+                    toast.error('Email Already Registered')
                 )
             }
 
@@ -111,7 +112,7 @@ export default function Signup() {
             }
 
             else {
-                alert('Server connection dropped. Please try again later.');
+                toast.error('Server connection dropped. Please try again later.');
             }
         }
 

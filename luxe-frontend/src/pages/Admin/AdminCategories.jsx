@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/api.js";
+import toast from "react-hot-toast";
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -36,16 +37,22 @@ const Categories = () => {
 
             await api.delete(`/admin/delete-category/${id}`);
 
-            setCategories(prevCategories => 
+            setCategories(prevCategories =>
                 prevCategories.filter(category => category._id !== id)
             )
 
-            alert('Category Deleted Successfully');
+            toast("Category Deleted Successfully", {
+                icon: "🗑️",
+                style: {
+                    background: "#ef4444",
+                    color: "#fff",
+                }
+            });
         }
 
         catch (err) {
             console.error("Error deleting Category:", err);
-            alert("Failed to delete Category.");
+            toast.error("Failed to delete Category.");
         }
     }
 
@@ -93,60 +100,60 @@ const Categories = () => {
                 </div>
             ) : (
 
-            <div className="grid gap-5">
+                <div className="grid gap-5">
 
-                {categories.map((category) => (
+                    {categories.map((category) => (
 
-                    <div
-                        key={category._id}
-                        className="bg-white rounded-2xl shadow-md p-5"
-                    >
+                        <div
+                            key={category._id}
+                            className="bg-white rounded-2xl shadow-md p-5"
+                        >
 
-                        <div className="flex gap-4">
+                            <div className="flex gap-4">
 
-                            <img
-                                src={`${import.meta.env.VITE_API_URL}/uploads/categories/${category.image}`}
-                                alt={category.name}
-                                className="w-24 h-24 rounded-xl object-cover"
-                            />
+                                <img
+                                    src={`${import.meta.env.VITE_API_URL}/uploads/categories/${category.image}`}
+                                    alt={category.name}
+                                    className="w-24 h-24 rounded-xl object-cover"
+                                />
 
-                            <div className="flex-1">
+                                <div className="flex-1">
 
-                                <h2 className="text-lg font-bold">
-                                    {category.name}
-                                </h2>
+                                    <h2 className="text-lg font-bold">
+                                        {category.name}
+                                    </h2>
 
-                                <p className="text-gray-500 mt-2">
-                                    Products : {category.productsCount ?? 0}
-                                </p>
+                                    <p className="text-gray-500 mt-2">
+                                        Products : {category.productsCount ?? 0}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div className="border-t mt-5 pt-5 flex justify-end gap-3">
+
+                                <button
+                                    onClick={() => handleEdit(category._id)}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+                                    <Pencil size={18} />
+                                    Edit
+                                </button>
+
+                                <button
+                                    onClick={() => handleDelete(category._id)}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                    <Trash2 size={18} />
+                                    Delete
+                                </button>
 
                             </div>
 
                         </div>
 
-                        <div className="border-t mt-5 pt-5 flex justify-end gap-3">
+                    ))}
 
-                            <button
-                            onClick={() => handleEdit(category._id)}
-                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
-                                <Pencil size={18} />
-                                Edit
-                            </button>
-
-                            <button 
-                            onClick={() => handleDelete(category._id)}
-                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition">
-                                <Trash2 size={18} />
-                                Delete
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                ))}
-
-            </div>
+                </div>
 
             )}
 

@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import { WishlistContext } from "../../store/WishlistContext";
 import { CartContext } from "../../store/CartContext";
 
+import toast from 'react-hot-toast';
+
 function Wishlist() {
     const { wishlist, loading, removeFromWishlist } = useContext(WishlistContext);
 
     const { addToCart } = useContext(CartContext);
 
-    const handleAddToCart = async (productID) => {
+    const handleAddToCart = async (productID, productName) => {
         await addToCart(productID, 1);
-        alert('Added To Cart')
+        toast.success(`${productName} Added To Cart`);
         await removeFromWishlist(productID);
     };
 
@@ -82,7 +84,7 @@ function Wishlist() {
                         <div className="flex flex-col gap-3 w-full md:w-auto">
                             <button
                                 onClick={() =>
-                                    handleAddToCart(item.product._id)
+                                    handleAddToCart(item.product._id, item.product.name)
                                 }
                                 className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition"
                             >

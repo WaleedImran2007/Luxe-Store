@@ -629,6 +629,22 @@ export async function planner(userMessage, history) {
         }
 
 
+        --- 
+
+        Example 22:
+        Do you have any winter jackets?
+        
+        Output:
+        {
+            plan: [{
+                "tool": "searchProduct",
+                "input": {
+                    "query": "winter jackets"
+                }
+            }]
+        }
+
+
 
     `
 

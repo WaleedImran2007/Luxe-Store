@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import api from "../../../api/api.js";
 import { Package, Search, Calendar, User, DollarSign, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -65,7 +66,7 @@ const AdminOrders = () => {
         } catch (err) {
             console.log(err);
             setOrders(previousOrders);
-            alert("Failed to update status. Please try again.");
+            toast.error("Failed to update status. Please try again.");
         } finally {
             setUpdatingId(null);
         }
@@ -86,7 +87,7 @@ const AdminOrders = () => {
         } catch (err) {
             console.log(err);
             setOrders(previousOrders);
-            alert("Failed to delete order. Please try again.");
+            toast.error("Failed to delete order. Please try again.");
         }
     };
 

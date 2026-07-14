@@ -90,16 +90,6 @@ async function synthesize(context, user, originalMessage, history) {
         Answer the question using only the data above and history.
     `;
 
-    console.log("History messages:", history.length);
-
-    console.log(
-        "History chars:",
-        history.reduce((sum, msg) => sum + msg.content.length, 0)
-    );
-
-    console.log("User prompt chars:", userPrompt.length);
-    console.log("System prompt chars:", systemPrompt.length);
-
     const completion = await groq.chat.completions.create({
         model: "llama-3.3-70b-versatile",
         temperature: 0.3,

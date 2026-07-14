@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { AuthContext } from "../../store/AuthContext";
+import toast from "react-hot-toast";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -62,7 +63,7 @@ export default function Login() {
             );
 
             if (res.status === 200) {
-                alert("Login successful!");
+                toast.success("Login successful!");
                 login(res.data.token);
                 setForm({
                     email: "",
@@ -70,7 +71,7 @@ export default function Login() {
                 })
             }
 
-            alert("Login Successful!");
+            toast.success("Login Successful!");
 
             navigate("/");
 
@@ -88,7 +89,7 @@ export default function Login() {
             }
 
             else {
-                alert("Server connection dropped.");
+                toast.error("Server connection dropped.");
             }
 
         } finally {

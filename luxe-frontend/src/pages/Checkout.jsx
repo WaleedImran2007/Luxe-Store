@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../store/CartContext";
 import api from "../../api/api.js";
 import { Link, useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -67,7 +68,7 @@ const Checkout = () => {
                 // Empty Cart
                 await api.delete('/cart/clear');
 
-                alert('Order Placed Successfully');
+                toast.success('Order Placed Successfully');
 
                 navigate('/my-orders');
             }
@@ -76,7 +77,7 @@ const Checkout = () => {
 
         catch (err) {
             const errorMessage = err.response?.data?.message || err.message || "Something went wrong";
-            alert(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsPlacingOrder(false);
         }

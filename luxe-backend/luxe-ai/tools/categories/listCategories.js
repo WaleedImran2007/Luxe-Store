@@ -16,7 +16,7 @@ export async function listCategories(context, step, user) {
             $project: {
                 _id: 0,
                 name: 1,
-                products: products,
+                products: '$products',
                 totalProducts: {
                     $size: "$products"
                 },

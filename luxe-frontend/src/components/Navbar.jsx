@@ -12,6 +12,8 @@ import {
   LayoutDashboard
 } from 'lucide-react'
 
+import toast from 'react-hot-toast';
+
 import { AuthContext } from '../../store/AuthContext.jsx';
 import { CartContext } from '../../store/CartContext.jsx';
 import { jwtDecode } from 'jwt-decode';
@@ -76,7 +78,7 @@ export default function Navbar() {
     logout();
     setUserMenuOpen(false)
     setMobileOpen(false)
-    alert('Succesfully Log Out');
+    toast.success("Logged out successfully");
     navigate('/login');
   }
 

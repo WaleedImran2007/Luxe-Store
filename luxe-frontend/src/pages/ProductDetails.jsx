@@ -4,6 +4,8 @@ import api from "../../api/api.js";
 
 import { AuthContext } from '../../store/AuthContext.jsx';
 
+import toast from "react-hot-toast";
+
 import {
     ShoppingCart,
     Heart,
@@ -81,7 +83,7 @@ const ProductDetails = () => {
             setSubmitting(true);
             await api.post(`/reviews/${id}`, { rating, comment });
 
-            alert('Review Saved Successfully');
+            toast.success('Review Saved Successfully');
 
             await fetchProduct();
             await fetchReviews();
@@ -281,7 +283,7 @@ const ProductDetails = () => {
                                 onClick={
                                     () => {
                                         addToCart(id, quantity)
-                                        alert('Added to Cart');
+                                        toast.success(`${product.name} Added to Cart`);
                                     }
                                 }
                                 className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl flex justify-center gap-3 font-semibold">
@@ -295,10 +297,16 @@ const ProductDetails = () => {
                                     () => {
                                         if (isWishlisted) {
                                             removeFromWishlist(id);
-                                            alert('Removed From Wishlist');
+                                            toast('Removed From Wishlist', {
+                                                icon: '🗑️',
+                                                style: {
+                                                    background: '#ef4444',
+                                                    color: "#fff",
+                                                }
+                                            });
                                         } else {
                                             addToWishlist(id);
-                                            alert('Added to Wishlist');
+                                            toast.success('Added to Wishlist');
                                         }
 
                                         setIsWishlisted(!isWishlisted);
@@ -531,7 +539,7 @@ const ProductDetails = () => {
 
                                                                 await api.delete(`/reviews/${id}`);
 
-                                                                alert("Review deleted successfully.");
+                                                                toast.success("Review deleted successfully.");
 
                                                                 setMyReview(null);
                                                                 setRating(0);
@@ -543,7 +551,7 @@ const ProductDetails = () => {
                                                             } catch (err) {
 
                                                                 console.log(err);
-                                                                alert("Failed to delete review.");
+                                                                toast.error("Failed to delete review.");
 
                                                             }
 

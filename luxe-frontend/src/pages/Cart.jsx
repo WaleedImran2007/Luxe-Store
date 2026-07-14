@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../../store/CartContext";
 import { Link } from "react-router-dom";
 import { Trash2 } from 'lucide-react';
+import toast from "react-hot-toast";
 
 function Cart() {
     const {
@@ -75,11 +76,11 @@ function Cart() {
 
                             <div className="flex-1">
 
-                            <Link to={`/product/${item.product._id}`}>
-                                <h2 className="text-xl font-semibold hover:text-yellow-400">
-                                    {item.product.name}
-                                </h2>
-                            </Link>
+                                <Link to={`/product/${item.product._id}`}>
+                                    <h2 className="text-xl font-semibold hover:text-yellow-400">
+                                        {item.product.name}
+                                    </h2>
+                                </Link>
 
                                 <p className="text-amber-500 font-bold text-lg mt-2">
                                     Rs. {item.product.discountedPrice.toLocaleString()}
@@ -122,9 +123,16 @@ function Cart() {
                             <div className="flex flex-row sm:flex-col justify-between items-center sm:items-end">
 
                                 <button
-                                    onClick={() =>
+                                    onClick={() => {
                                         removeFromCart(item.product._id)
-                                    }
+                                        toast("Removed from cart", {
+                                            icon: "🗑️",
+                                            style: {
+                                                background: "#ef4444",
+                                                color: "#fff",
+                                            },
+                                        });
+                                    }}
                                     className="text-red-500 hover:text-red-700"
                                 >
                                     <Trash2 size={24} />

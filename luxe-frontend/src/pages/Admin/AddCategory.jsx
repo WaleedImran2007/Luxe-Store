@@ -3,6 +3,8 @@ import axios from "axios";
 import api from "../../../api/api.js";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import toast from "react-hot-toast";
+
 const AddCategory = () => {
     const navigate = useNavigate();
 
@@ -109,20 +111,20 @@ const AddCategory = () => {
                     formData
                 );
 
-                alert("Category updated successfully!");
+                toast.success("Category updated successfully!");
             } else {
                 await api.post(
                     `/admin/add-category`,
                     formData
                 );
 
-                alert("Category added successfully!");
+                toast.success("Category added successfully!");
             }
 
             navigate("/admin/categories");
         } catch (err) {
             console.log(err);
-            alert("Something went wrong.");
+            toast.error("Something went wrong.");
         } finally {
             setIsSubmitting(false);
         }

@@ -5,6 +5,8 @@ import { CartContext } from '../../store/CartContext.jsx';
 import { AuthContext } from '../../store/AuthContext.jsx'
 import { WishlistContext } from '../../store/WishlistContext.jsx';
 
+import toast from 'react-hot-toast';
+
 import { Heart } from 'lucide-react';
 
 const Shop = () => {
@@ -538,8 +540,16 @@ const Shop = () => {
                                                     onClick={
                                                         () => {
                                                             if (isWishlisted) {
+                                                                toast(`${item.name} removed from your wishlist`, {
+                                                                    icon: "🗑️",
+                                                                    style: {
+                                                                        background: "#ef4444",
+                                                                        color: "#fff",
+                                                                    },
+                                                                });
                                                                 removeFromWishlist(item._id);
                                                             } else {
+                                                                toast.success(`${item.name} added to your Wishlist ❤️`)
                                                                 addToWishlist(item._id);
                                                             }
                                                         }
@@ -590,9 +600,9 @@ const Shop = () => {
                                                     onClick={() => {
                                                         if (token) {
                                                             addToCart(item._id, 1);
-                                                            alert("Added To Cart");
+                                                            toast.success(`${item.name} Added To Cart`);
                                                         } else {
-                                                            alert("Please login to add items to cart.");
+                                                            toast.error("Please login to add items to cart.");
                                                             navigate("/login");
                                                         }
                                                     }}

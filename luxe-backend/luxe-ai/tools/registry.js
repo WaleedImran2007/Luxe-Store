@@ -2,6 +2,7 @@
 import { compareProducts } from "./products/compareProducts.js";
 import { getProductDetails } from "./products/getProductDetails.js";
 import { recommendProducts } from "./products/recommendProducts.js";
+import { searchProduct } from "./products/searchProduct.js";
 
 // CATEGORY RELATED TOOLS
 import { listCategories } from "./categories/listCategories.js";
@@ -40,6 +41,7 @@ export const toolsRegistry = {
     getProductDetails,
     compareProducts,
     recommendProducts,
+    searchProduct,
     listCategories,
     getCart,
     addToCart,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/api.js";
+import toast from "react-hot-toast";
 
 const Products = () => {
     const navigate = useNavigate();
@@ -32,12 +33,18 @@ const Products = () => {
                 prevItems.filter(i => i._id !== id)
             );
 
-            alert('Item Deleted Successfully');
+            toast("Item Deleted Successfully", {
+                icon: "🗑️",
+                style: {
+                    backgroundColor: "#ef4444",
+                    color: "#fff",
+                }
+            });
         }
 
         catch (err) {
             console.error("Error deleting item:", err);
-            alert("Failed to delete item.");
+            toast.error("Failed to delete item.");
         }
     }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../../api/api.js";
+import toast from "react-hot-toast";
 
 const AddItems = () => {
     const navigate = useNavigate();
@@ -54,7 +55,7 @@ const AddItems = () => {
 
             } catch (err) {
                 console.error("Error fetching item details:", err);
-                alert("Failed to load item data.");
+                toast.error("Failed to load item data.");
             } finally {
                 setIsFetching(false);
             }
@@ -121,17 +122,17 @@ const AddItems = () => {
 
             if (editID) {
                 await api.put(`/admin/update-item/${editID}`, formData);
-                alert("Item Updated Successfully!");
+                toast.success("Item Updated Successfully!");
             } else {
                 await api.post('/admin/add-item', formData);
-                alert("Item Added Successfully!");
+                toast.success("Item Added Successfully!");
             }
 
             navigate("/admin/products");
         } catch (err) {
             console.log(err);
             console.log(err.response?.data);
-            alert("Something went wrong saving the item.");
+            toast.error("Something went wrong saving the item.");
         } finally {
             setIsSubmitting(false);
         }
