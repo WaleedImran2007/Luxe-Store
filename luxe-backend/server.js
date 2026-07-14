@@ -33,6 +33,7 @@ app.use(cors({
     origin: [
         "http://localhost:5173",
         "https://luxe.waleedimran.me",
+        "https://luxe-store-sooty.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
