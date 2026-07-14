@@ -459,29 +459,30 @@ const ProductDetails = () => {
                                                 {/* Avatar */}
                                                 <div className="w-14 h-14 rounded-full overflow-hidden bg-amber-500 flex items-center justify-center flex-shrink-0">
 
-                                                    {review.user.profileImage ? (
+                                                    {review.user?.profileImage ? (
 
                                                         <img
                                                             src={`${import.meta.env.VITE_API_URL}/uploads/pfp/${review.user.profileImage}`}
-                                                            alt={review.user.username}
+                                                            alt={review.user?.username || "User"}
                                                             className="w-full h-full object-cover"
                                                         />
 
                                                     ) : (
 
                                                         <span className="text-white text-xl font-bold">
-                                                            {review.user.username[0].toUpperCase()}
+                                                            {review.user?.username?.[0]?.toUpperCase() || "U"}
                                                         </span>
 
                                                     )}
 
                                                 </div>
 
+
                                                 {/* Name + Stars */}
                                                 <div>
 
                                                     <h4 className="font-semibold text-lg text-gray-900">
-                                                        {review.user.username}
+                                                        {review.user?.username || "Deleted User"}
                                                     </h4>
 
                                                     <div className="flex items-center gap-1 mt-1">
@@ -511,13 +512,15 @@ const ProductDetails = () => {
 
                                             </div>
 
+
                                             <div className="flex items-center gap-4">
 
                                                 <span className="text-sm text-gray-500">
                                                     {new Date(review.createdAt).toLocaleDateString()}
                                                 </span>
 
-                                                {review.user._id === decodedUser.userID && (
+
+                                                {review.user?._id === decodedUser.userID && (
 
                                                     <button
                                                         onClick={async () => {
