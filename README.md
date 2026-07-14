@@ -1,29 +1,48 @@
-# 🛍️ LUXE Store
-
 A modern full-stack e-commerce web application built using the **MERN Stack**. LUXE Store provides a seamless shopping experience with secure authentication, an admin dashboard, AI-powered assistance, Stripe payment integration, and much more.
 
 ---
 
 ## 🌐 Live Demo
 
-> Frontend: https://luxe.waleedimran.me
-
-> Backend API: *(Add your deployed backend URL here)*
+> https://luxe.waleedimran.me
 
 ---
 
 ## 📸 Screenshots
 
-> Add screenshots after deployment.
+### 🏠 Home Page
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4098f759-808f-42d7-830f-a3fcc969753c" alt="Home Page" width="90%" />
+</p>
 
-- Home Page
-- Shop
-- Product Details
-- Cart
-- Checkout
-- User Dashboard
-- Admin Dashboard
-- AI Assistant
+---
+
+### 🛍️ Shop
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ae11fee3-39b7-426a-ad45-960f2d940703" alt="Shop Page" width="90%" />
+</p>
+
+---
+
+### 💳 Checkout
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7831a2bd-dc6d-4a3c-b8d8-9afc6c0642d0" alt="Checkout Page" width="90%" />
+</p>
+
+---
+
+### 📊 Admin Dashboard
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9985c308-9e24-4d12-9d7a-05c53e37706d" alt="Admin Dashboard" width="90%" />
+</p>
+
+---
+
+### 🤖 AI Assistant
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/55ede97f-7060-43da-9bc0-2ad6f21b6e4d" alt="AI Assistant" width="400" />
+</p>
+
 
 ---
 
@@ -269,7 +288,6 @@ npm run dev
 - Recently Viewed Products
 - Coupon System
 - Inventory Alerts
-- Sales Reports
 - Multi-language Support
 - Email Notifications
 - Easypaisa Integration
