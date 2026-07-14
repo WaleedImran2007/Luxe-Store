@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { CartContext } from '../../store/CartContext';
-import { WishlistContext } from '../../store/WishlistContext';
+import { CartContext } from '../../store/CartContext.jsx';
+import { AuthContext } from '../../store/AuthContext.jsx'
+import { WishlistContext } from '../../store/WishlistContext.jsx';
 
 import { Heart } from 'lucide-react';
 
@@ -24,6 +25,7 @@ const Shop = () => {
     const [sortBy, setSortBy] = useState(searchParams.get('sortBy') || 'newest');
 
     const { addToCart } = useContext(CartContext);
+    const { token } = useContext(AuthContext);
     const { wishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext);
 
     // PAGINATION STATES
@@ -509,104 +511,109 @@ const Shop = () => {
                                 </button>
                             </div>
                         ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7">
-                            {items.map(item => {
-                                const isWishlisted = wishlist.some(
-                                    wish => wish.product._id === item._id
-                                )
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7">
+                                {items.map(item => {
+                                    const isWishlisted = wishlist.some(
+                                        wish => wish.product._id === item._id
+                                    )
 
-                                return (
-                                    <div
-                                        key={item._id}
-                                        className="group bg-white rounded-2xl overflow-hidden border border-stone-200 hover:shadow-xl transition-all duration-300"
-                                    >
+                                    return (
+                                        <div
+                                            key={item._id}
+                                            className="group bg-white rounded-2xl overflow-hidden border border-stone-200 hover:shadow-xl transition-all duration-300"
+                                        >
 
-                                        <div className="relative overflow-hidden">
-                                            <img
-                                                src={`${import.meta.env.VITE_API_URL}/uploads/items/${item.image}`}
-                                                alt={item.name}
-                                                className="w-full h-[340px] object-cover transition-transform duration-500 group-hover:scale-105"
-                                            />
+                                            <div className="relative overflow-hidden">
+                                                <img
+                                                    src={`${import.meta.env.VITE_API_URL}/uploads/items/${item.image}`}
+                                                    alt={item.name}
+                                                    className="w-full h-[340px] object-cover transition-transform duration-500 group-hover:scale-105"
+                                                />
 
-                                            <div className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                                                -{item.discountPercentage}%
-                                            </div>
+                                                <div className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                                    -{item.discountPercentage}%
+                                                </div>
 
-                                            <button
-                                                onClick={
-                                                    () => {
-                                                        if (isWishlisted) {
-                                                            removeFromWishlist(item._id);
-                                                        } else {
-                                                            addToWishlist(item._id);
+                                                <button
+                                                    onClick={
+                                                        () => {
+                                                            if (isWishlisted) {
+                                                                removeFromWishlist(item._id);
+                                                            } else {
+                                                                addToWishlist(item._id);
+                                                            }
                                                         }
                                                     }
-                                                }
-                                                className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-                                                {isWishlisted ? (
-                                                    <Heart color="#ff0055" fill="red" size={18} />
-                                                ) : (
-                                                    "♡"
-                                                )}
-                                            </button>
-                                        </div>
-
-                                        <div className="p-4">
-                                            <div className="text-xs uppercase tracking-wider text-stone-400 mb-1">
-                                                {item.category.name}
+                                                    className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
+                                                    {isWishlisted ? (
+                                                        <Heart color="#ff0055" fill="red" size={18} />
+                                                    ) : (
+                                                        "♡"
+                                                    )}
+                                                </button>
                                             </div>
 
-                                            <Link to={`/product/${item._id}`}>
-                                                <h3 className="font-semibold text-lg text-navy-900 line-clamp-1 hover:text-yellow-400">
-                                                    {item.name}
-                                                </h3>
-                                            </Link>
+                                            <div className="p-4">
+                                                <div className="text-xs uppercase tracking-wider text-stone-400 mb-1">
+                                                    {item.category.name}
+                                                </div>
 
-                                            <div className="flex items-center gap-2 mt-2">
-                                                <span>⭐</span>
+                                                <Link to={`/product/${item._id}`}>
+                                                    <h3 className="font-semibold text-lg text-navy-900 line-clamp-1 hover:text-yellow-400">
+                                                        {item.name}
+                                                    </h3>
+                                                </Link>
 
-                                                <span className="font-medium">
-                                                    {item.rating}
-                                                </span>
+                                                <div className="flex items-center gap-2 mt-2">
+                                                    <span>⭐</span>
 
-                                                <span className="text-sm text-stone-400">
-                                                    ({item.numOfReviews})
-                                                </span>
-                                            </div>
+                                                    <span className="font-medium">
+                                                        {item.rating}
+                                                    </span>
 
-                                            <div className="flex items-center gap-3 mt-3">
-                                                <span className="font-bold text-xl text-navy-900">
-                                                    Rs. {item.discountedPrice}
-                                                </span>
+                                                    <span className="text-sm text-stone-400">
+                                                        ({item.numOfReviews})
+                                                    </span>
+                                                </div>
 
-                                                <span className="text-stone-400 line-through">
-                                                    Rs. {item.originalPrice}
-                                                </span>
-                                            </div>
+                                                <div className="flex items-center gap-3 mt-3">
+                                                    <span className="font-bold text-xl text-navy-900">
+                                                        Rs. {item.discountedPrice}
+                                                    </span>
 
-                                            <button
-                                                onClick={() => {
-                                                    addToCart(item._id, 1);
-                                                    alert('Added To Cart')
-                                                }}
-                                                disabled={item.stock === 0}
-                                                className={`w-full mt-4 py-3 rounded-xl font-medium transition
+                                                    <span className="text-stone-400 line-through">
+                                                        Rs. {item.originalPrice}
+                                                    </span>
+                                                </div>
+
+                                                <button
+                                                    onClick={() => {
+                                                        if (token) {
+                                                            addToCart(item._id, 1);
+                                                            alert("Added To Cart");
+                                                        } else {
+                                                            alert("Please login to add items to cart.");
+                                                            navigate("/login");
+                                                        }
+                                                    }}
+                                                    disabled={item.stock === 0}
+                                                    className={`w-full mt-4 py-3 rounded-xl font-medium transition
                                                 ${item.stock
-                                                        ? "bg-navy-900 text-white hover:bg-amber-500"
-                                                        : "bg-stone-300 text-stone-500 cursor-not-allowed"
-                                                    }`}
-                                            >
-                                                {
-                                                    item.stock
-                                                        ? "Add to Cart"
-                                                        : "Out of Stock"
-                                                }
-                                            </button>
+                                                            ? "bg-navy-900 text-white hover:bg-amber-500"
+                                                            : "bg-stone-300 text-stone-500 cursor-not-allowed"
+                                                        }`}
+                                                >
+                                                    {
+                                                        item.stock
+                                                            ? "Add to Cart"
+                                                            : "Out of Stock"
+                                                    }
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                    );
+                                })}
+                            </div>
                         )}
 
                         <Pagination />
