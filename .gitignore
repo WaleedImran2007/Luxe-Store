@@ -1,0 +1,38 @@
+# ==========================================
+# Global / Editor Ignores (Applies everywhere)
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# Logs & System Files
+# ==========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Monorepo Subfolder Rules
+# ==========================================
+
+# 1. Dependency Directories
+**/node_modules/
+
+# 2. Build Outputs
+**/dist/
+**/dist-ssr/
+
+# 3. Environment Variables (CRITICAL to ignore in both folders)
+**/local
+**/.env*
